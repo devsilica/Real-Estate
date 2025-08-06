@@ -37,6 +37,7 @@ const Footer = () => {
   return (
     <div className='pt-10 px-4 md:px-20 lg:px-32 bg-gray-900 w-full overflow-hidden' id='Footer'>
       <div className='container mx-auto flex flex-col md:flex-row justify-between items-start'>
+        {/* Column 1: Estate Info */}
         <div className='w-full md:w-1/3 mb-8 md:mb-0'>
           <img src={assets.logo_dark} alt="SilStack Logo" />
           <p className='text-gray-400 mt-4'>
@@ -44,6 +45,7 @@ const Footer = () => {
           </p>
         </div>
 
+        {/* Column 2: Company Links */}
         <div className='w-full md:w-1/5 mb-8 md:mb-0'>
           <h3 className='text-white text-lg font-bold mb-4'>Company</h3>
           <ul className='flex flex-col gap-2 text-gray-400'>
@@ -54,6 +56,7 @@ const Footer = () => {
           </ul>
         </div>
 
+        {/* Column 3: Newsletter */}
         <div className='w-full md:w-1/3'>
           <h3 className='text-white text-lg font-bold mb-4'>Subscribe To Our Newsletter</h3>
           <p className='text-gray-400 mb-4 max-w-80'>
@@ -61,18 +64,18 @@ const Footer = () => {
           </p>
 
           {!subscribed ? (
-            <form onSubmit={handleSubscribe} className='flex gap-2'>
+            <form onSubmit={handleSubscribe} className='flex flex-col sm:flex-row gap-2'>
               <input
                 type="email"
                 name="Email"
                 placeholder='Enter Your Email'
                 required
-                className='p-2 rounded bg-gray-800 text-gray-400 border border-gray-700 focus:outline-none md:w-auto'
+                className='p-2 rounded bg-gray-800 text-gray-400 border border-gray-700 focus:outline-none w-full'
               />
               <button
                 type="submit"
                 disabled={loading}
-                className={`py-2 px-4 rounded bg-blue-500 text-white transition ${
+                className={`py-2 px-4 rounded bg-blue-500 text-white transition w-full sm:w-auto ${
                   loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
                 }`}
               >
