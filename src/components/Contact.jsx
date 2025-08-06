@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { assets } from '../assets/assets';
 
-const Contact = () => {
-  const [showPopup, setShowPopup] = useState(false);
+const Footer = () => {
+  const [subscribed, setSubscribed] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -22,96 +22,78 @@ const Contact = () => {
       });
 
       if (response.ok) {
-        setShowPopup(true);
+        setSubscribed(true);
         form.reset();
       } else {
-        alert('Oops! Something went wrong.');
+        alert('Subscription failed. Please try again.');
       }
     } catch (error) {
-      console.error('Submission error:', error);
+      console.error('Subscription error:', error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, x: -200 }}
-      transition={{ duration: 1 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      className='text-center p-6 py-20 lg:px-32 w-full overflow-hidden' 
-      id='Contact'
-    >
-      <h1 className='text-2xl sm:text-4xl font-bold mb-2 text-center'>
-        Contact<span className='underline underline-offset-4 decoration-1 font-light'> Us</span>
-      </h1>
-      <p className='text-center text-gray-500 mb-12 max-w-80 mx-auto'>
-        Ready To Make A Move? Let's Build Your Future Together
-      </p>
+    <div className='pt-10 px-4 md:px-20 lg:px-32 bg-gray-900 w-full overflow-hidden' id='Footer'>
+      <div className='container mx-auto flex flex-col md:flex-row justify-between items-start'>
+        {/* Column 1: Estate Info */}
+        <div className='w-full md:w-1/3 mb-8 md:mb-0'>
+          <img src={assets.logo_dark} alt="SilStack Logo" />
+          <p className='text-gray-400 mt-4'>
+            Building Dreams, Shaping Skylines. With over 10 years of excellence in real estate, we've delivered 20M+ sq. ft. across 12+ landmark projects and 25+ ongoing ventures. Trusted for innovation, quality, and integrity—turning property dreams into reality, one space at a time.
+          </p>
+        </div>
 
-      <form onSubmit={handleSubmit} className='max-w-2xl mx-auto text-gray-600 pt-8'>
-        <div className='flex flex-wrap'>
-          <div className='w-full md:w-1/2 text-left'>
-            Your Name
-            <input
-              className='w-full border border-gray-300 rounded py-3 px-4 mt-2'
-              type='text'
-              name='Name'
-              placeholder='Your Name'
-              required
-            />
-          </div>
-          <div className='w-full md:w-1/2 text-left md:pl-4'>
-            Your Email
-            <input
-              className='w-full border border-gray-300 rounded py-3 px-4 mt-2'
-              type='email'
-              name='Email'
-              placeholder='Your Email'
-              required
-            />
-          </div>
+        {/* Column 2: Company Links */}
+        <div className='w-full md:w-1/5 mb-8 md:mb-0'>
+          <h3 className='text-white text-lg font-bold mb-4'>Company</h3>
+          <ul className='flex flex-col gap-2 text-gray-400'>
+            <a href="#Header" className='hover:text-white'>Home</a>
+            <a href="#About" className='hover:text-white'>About Us</a>
+            <a href="#Contact" className='hover:text-white'>Contact Us</a>
+            <a href="#" className='hover:text-white'>Privacy Policy</a>
+          </ul>
         </div>
-        <div className='my-6 text-left'>
-          Message
-          <textarea
-            className='w-full border border-gray-300 rounded py-3 px-4 mt-2 h-48 resize-none'
-            name='Message'
-            placeholder='Message'
-            required
-          ></textarea>
-        </div>
-        <button
-          type='submit'
-          className={`bg-blue-600 text-white py-2 px-12 mb-10 rounded transition ${
-            loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'
-          }`}
-          disabled={loading}
-        >
-          {loading ? 'Sending...' : 'Send Message'}
-        </button>
-      </form>
 
-      {/* Popup */}
-      {showPopup && (
-        <div className='fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 px-4'>
-          <div className='bg-white p-6 rounded-lg shadow-lg text-center w-full max-w-sm sm:max-w-md'>
-            <h2 className='text-lg sm:text-xl font-semibold mb-2'>Thank you for reaching out!</h2>
-            <p className='mb-4 text-gray-700 text-sm sm:text-base'>
-              We’ll get back to you shortly. In the meantime, feel free to explore more listings or contact us directly.
-            </p>
-            <button
-              onClick={() => setShowPopup(false)}
-              className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-sm sm:text-base'
-            >
-              Close
-            </button>
-          </div>
+        {/* Column 3: Newsletter */}
+        <div className='w-full md:w-1/3'>
+          <h3 className='text-white text-lg font-bold mb-4'>Subscribe To Our Newsletter</h3>
+          <p className='text-gray-400 mb-4 max-w-80'>
+            The latest news, articles, and resources—sent to your inbox.
+          </p>
+
+          {!subscribed ? (
+            <form onSubmit={handleSubscribe} className='flex flex-col sm:flex-row gap-2'>
+              <input
+                type="email"
+                name="Email"
+                placeholder='Enter Your Email'
+                required
+                className='p-2 rounded bg-gray-800 text-gray-400 border border-gray-700 focus:outline-none w-full'
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className={`py-2 px-4 rounded bg-blue-500 text-white transition w-full sm:w-auto ${
+                  loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+                }`}
+              >
+                {loading ? 'Subscribing...' : 'Subscribe'}
+              </button>
+            </form>
+          ) : (
+            <p className='text-green-400'>Thanks for subscribing!</p>
+          )}
         </div>
-      )}
-    </motion.div>
+      </div>
+
+      <div className='border-t border-gray-700 py-4 mt-10 text-center text-gray-500'>
+        Copyright 2025 © SilStack. All Rights Reserved.
+      </div>
+    </div>
   );
 };
 
-export default Contact;
+export default Footer;
+
